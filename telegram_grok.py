@@ -1,48 +1,30 @@
-import telegram
-from telegram.ext import Updater, CommandHandler
-import logging
+import requests
 
-# Enable logging to see what's happening
-logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
-                   level=logging.INFO)
+def send_telegram_message(api_token, chat_id, message):
+    """
+    Send a message to a Telegram chat using the Bot API.
 
-# Replace 'YOUR_BOT_TOKEN' with the token you get from BotFather
-TOKEN = '7659139732:AAHc7q-k52WeT2p1RNRSnophWptEH_KI5Fc'  #'YOUR_BOT_TOKEN' 7659139732:AAHc7q-k52WeT2p1RNRSnophWptEH_KI5Fc
+    Args:
+        api_token (str): The API token obtained from BotFather.
+        chat_id (int): The ID of the chat where the message will be sent.
+        message (str): The message to be sent.
+    """
+    url = f"https://api.telegram.org/bot{api_token}/sendMessage"
+    payload = {
+        "chat_id": chat_id,
+        "text": message
+    }
+    response = requests.post(url, json=payload)
+    return response.json()
+# https://api.telegram.org/bot7659139732:AAHc7q-k52WeT2p1RNRSnophWptEH_KI5Fc/getUpdates
+# Example usage
+api_token = "7659139732:AAHc7q-k52WeT2p1RNRSnophWptEH_KI5Fc"  #"YOUR_API_TOKEN_HERE"
+chat_id = "-1002319021247"  #"YOUR_CHAT_ID_HERE"
+# chat_id = "5507785599"  #"telebot"
+# add date and time to the message
+import datetime 
+now = datetime.datetime.now()
+message = "Hello from Linkgear! "+str(now)  # "Hello from Linkgear!"
 
-# Replace 'YOUR_CHAT_ID' with the chat ID you want to send messages to
-CHAT_ID = '336d1586-72ea-4b2c-a916-3daaba4d8502' #'YOUR_CHAT_ID'
-
-# Initialize the bot
-bot = telegram.Bot(token=TOKEN)
-
-def start(update, context):
-    """Send a welcome message when the command /start is issued."""
-    update.message.reply_text('Hello! I can send messages to this chat.')
-
-def send_message(context):
-    """Function to send a message to the specified chat."""
-    context.bot.send_message(chat_id=CHAT_ID, 
-                           text='This is a test message from your bot!')
-
-def main():
-    """Main function to run the bot."""
-    # Create the Updater and pass it your bot's token
-    updater = Updater(TOKEN, use_context=True)
-
-    # Get the dispatcher to register handlers
-    dp = updater.dispatcher
-
-    # Add command handler for /start
-    dp.add_handler(CommandHandler("start", start))
-
-    # Schedule a message to be sent (e.g., immediately for testing)
-    updater.job_queue.run_once(send_message, 0)
-
-    # Start the bot
-    updater.start_polling()
-
-    # Run the bot until you press Ctrl+C
-    updater.idle()
-
-if __name__ == '__main__':
-    main()
+response = send_telegram_message(api_token, chat_id, message)
+print(response)
