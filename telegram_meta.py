@@ -2,7 +2,7 @@ from warnings import filters
 from telegram.ext import Updater, CommandHandler, MessageHandler
 
 # Replace with your bot token
-TOKEN = '7659139732:AAHc7q-k52WeT2p1RNRSnophWptEH_KI5Fc' #'YOUR_BOT_TOKEN'
+TOKEN = '' #'YOUR_BOT_TOKEN'
 
 def start(update, context):
     """Send a message when the command /start is issued."""
