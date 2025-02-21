@@ -18,7 +18,7 @@ def send_telegram_message(api_token, chat_id, message):
     return response.json()
 # https://api.telegram.org/bot7659139732:AAHc7q-k52WeT2p1RNRSnophWptEH_KI5Fc/getUpdates
 # Example usage
-api_token = "7659139732:AAHc7q-k52WeT2p1RNRSnophWptEH_KI5Fc"  #"YOUR_API_TOKEN_HERE"
+api_token = ""  #"YOUR_API_TOKEN_HERE"
 chat_id = "-1002319021247"  #"YOUR_CHAT_ID_HERE"
 # chat_id = "5507785599"  #"telebot"
 # add date and time to the message
